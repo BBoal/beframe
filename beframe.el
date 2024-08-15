@@ -169,6 +169,7 @@ The following values of ARG can be used:
              else if (with-current-buffer b (derived-mode-p modes-lst))
              collect b)))
 
+
 (cl-defun beframe-buffer-list (&optional frame &key sort)
   "Return list of buffers that are used by the current frame.
 With optional FRAME as an object that satisfies `framep', return
@@ -181,10 +182,10 @@ for example, be used to prefer hidden buffers to visible ones—see
 
 Include `beframe-global-buffers' in the list."
   (funcall (or sort #'identity)
-           (delq nil
-                 (delete-dups
-                  (append (beframe--get-buffers frame)
-                          (beframe--global-buffers))))))
+           ;; NOTE Does nil appears here?
+           (delq nil (seq-union (beframe--get-buffers frame)
+                                (beframe--global-buffers)))))
+
 
 (define-obsolete-function-alias
   'beframe--buffer-list
@@ -274,7 +275,7 @@ frame name."
 
 (defun beframe--multiple-frames-p ()
   "Return non-nil if `frame-list' is longer than 1."
-  (> (length (frame-list)) 1))
+  (length> (frame-list) 1))
 
 (defun beframe--frame-prompt (&optional force)
   "Prompt to select a frame among the list of frames.
