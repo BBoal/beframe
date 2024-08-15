@@ -40,8 +40,10 @@
   "Isolate buffers per frame."
   :group 'frames)
 
+
+;; NOTE Testing purposes
 (defcustom beframe-global-buffers
-  '("\\*scratch\\*" "\\*Messages\\*" "\\*Backtrace\\*")
+  '("\\*scratch\\*" "\\*Messages.*\\*" "\\*Backtrace\\*" lisp-data-mode notmuch-search-mode)
   "List of regular expressions or major-mode symbols to match global buffers.
 
 Global buffers are those which are not associated only with the frame
